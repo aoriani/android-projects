@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="Square">
+      <attr name="x" format="integer"/>
+      <attr name="y" format="integer"/>
+      <attr name="state" format="enum">
+          <enum name="empty" value="0"/>
+          <enum name="nought" value="1"/>
+          <enum name="cross" value="2"/>
+      </attr>     
+  </declare-styleable>   
+</resources>
