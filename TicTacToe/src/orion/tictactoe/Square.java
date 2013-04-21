@@ -11,20 +11,19 @@ import android.widget.ImageView;
 /** The view to show the squares in the tic tac toe game */
 public class Square extends ImageView {
 
-    
-    private static final int MAX_LINES = 3;
+    private static final int MAX_ROWS = 3;
     private static final int MAX_COLUMNS = 3; 
 
-    /** The column */
-    private int mX = 0;
+    /** The row */
+    private int mRow = 0;
 
-    /** The line */
-    private int mY = 0;
+    /** The column */
+    private int mColumn = 0;
 
     /** The state of the Square - empty, cross or nought */
     private Piece mState = Piece.EMPTY;
     
-    
+    /** Class to save the Square view's state */
     private static class SquareSavedState extends BaseSavedState{
          private int mState;
    
@@ -69,7 +68,7 @@ public class Square extends ImageView {
     }
 
     public Square(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public Square(Context context, AttributeSet attrs, int defStyle) {
@@ -77,19 +76,36 @@ public class Square extends ImageView {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Square);
         try {
-            int x = a.getInt(R.styleable.Square_x, 0);
-            if(x >= 0 && x < MAX_LINES) mX = x;
+            int x = a.getInt(R.styleable.Square_row, 0);
+            if(x >= 0 && x < MAX_ROWS) mColumn = x;
             
-            int y = a.getInt(R.styleable.Square_y, 0);
-            if(y >= 0 &&  y < MAX_COLUMNS) mY = y;
+            int y = a.getInt(R.styleable.Square_column, 0);
+            if(y >= 0 &&  y < MAX_COLUMNS) mRow = y;
             
             int state = a.getInt(R.styleable.Square_state, 0);
-            mState = Piece.values()[state];
+            setState(Piece.values()[state]);
         } finally {
             a.recycle();
         }
     }
-
+    
+    public int getRow(){
+        return mRow;
+    }
+    
+    public int getColumn(){
+        return mColumn;
+    }
+    
+    public void setState(Piece state){
+        mState = state;
+        this.setImageDrawable(mState.getMedia(getContext()));
+    }
+    
+    public Piece getState(){
+        return mState;
+    }
+    
     /* (non-Javadoc)
      * @see android.view.View#onRestoreInstanceState(android.os.Parcelable)
      */
@@ -98,7 +114,7 @@ public class Square extends ImageView {
         if(state instanceof SquareSavedState){
             SquareSavedState savedState = (SquareSavedState) state;
             super.onRestoreInstanceState(savedState.getSuperState());
-            mState = savedState.getState();
+            setState(savedState.getState());
         }else{
             super.onRestoreInstanceState(state);
         }
