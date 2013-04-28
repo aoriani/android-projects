@@ -11,9 +11,6 @@ import android.widget.ImageView;
 /** The view to show the squares in the tic tac toe game */
 public class Square extends ImageView {
 
-    private static final int MAX_ROWS = 3;
-    private static final int MAX_COLUMNS = 3; 
-
     /** The row */
     private int mRow = 0;
 
@@ -77,10 +74,10 @@ public class Square extends ImageView {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Square);
         try {
             int x = a.getInt(R.styleable.Square_row, 0);
-            if(x >= 0 && x < MAX_ROWS) mColumn = x;
+            if(x >= 0 && x < GameEngine.MAX_ROWS) mColumn = x;
             
             int y = a.getInt(R.styleable.Square_column, 0);
-            if(y >= 0 &&  y < MAX_COLUMNS) mRow = y;
+            if(y >= 0 &&  y < GameEngine.MAX_COLUMNS) mRow = y;
             
             int state = a.getInt(R.styleable.Square_state, 0);
             setState(Piece.values()[state]);
