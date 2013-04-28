@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /** The view to show the squares in the tic tac toe game */
-public class Square extends ImageView {
+public class SquareView extends ImageView {
 
     /** The row */
     private int mRow = 0;
@@ -17,10 +17,10 @@ public class Square extends ImageView {
     /** The column */
     private int mColumn = 0;
 
-    /** The state of the Square - empty, cross or nought */
+    /** The state of the SquareView - empty, cross or nought */
     private Piece mState = Piece.EMPTY;
     
-    /** Class to save the Square view's state */
+    /** Class to save the SquareView view's state */
     private static class SquareSavedState extends BaseSavedState{
          private int mState;
    
@@ -60,26 +60,26 @@ public class Square extends ImageView {
 
     }
     
-    public Square(Context context) {
+    public SquareView(Context context) {
         super(context);
     }
 
-    public Square(Context context, AttributeSet attrs) {
+    public SquareView(Context context, AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public Square(Context context, AttributeSet attrs, int defStyle) {
+    public SquareView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Square);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SquareView);
         try {
-            int x = a.getInt(R.styleable.Square_row, 0);
+            int x = a.getInt(R.styleable.SquareView_row, 0);
             if(x >= 0 && x < GameEngine.MAX_ROWS) mColumn = x;
             
-            int y = a.getInt(R.styleable.Square_column, 0);
+            int y = a.getInt(R.styleable.SquareView_column, 0);
             if(y >= 0 &&  y < GameEngine.MAX_COLUMNS) mRow = y;
             
-            int state = a.getInt(R.styleable.Square_state, 0);
+            int state = a.getInt(R.styleable.SquareView_state, 0);
             setState(Piece.values()[state]);
         } finally {
             a.recycle();

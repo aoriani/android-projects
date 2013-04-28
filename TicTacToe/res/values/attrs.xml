@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <declare-styleable name="Square">
+  <declare-styleable name="SquareView">
       <attr name="row" format="integer"/>
       <attr name="column" format="integer"/>
       <attr name="state" format="enum">
