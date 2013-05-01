@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="textStyleParent">
+        <item name="android:typeface">monospace</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/texto</item>
+        <item name="android:text">Hello</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:minLines">1</item>
+        <item name="android:background">#00f</item>
+        <item name="android:visibility">visible</item>
+    </style>
+
+
+        <style name="textStyle" parent="@style/textStyleParent">
+        <item name="android:textSize">8sp</item>
+        <item name="android:src">@android:drawable/ic_menu_save</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+    <color name="texto">#f00</color>
+
+
+</resources>

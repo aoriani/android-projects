@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="mytext">
+        <item name="android:typeface">serif</item>
+<!--         <item name="android:gravity">left</item> -->
+<!--         <item name="android:textColor">#FF00FF</item> -->
+        <item name="android:text">Hello</item>
+        <item name="android:maxLines">3</item>
+<!--         <item name="android:textStyle">bold|italic</item> -->
+<!--         <item name="android:textSize">8sp</item> -->
+        <item name="android:minLines">1</item>
+    </style>
+
+
+</resources>
