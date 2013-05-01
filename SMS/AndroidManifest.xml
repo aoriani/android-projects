@@ -19,7 +19,7 @@
 		          android:launchMode="singleTop"
 			      android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
-				<action android:name="com.motorola.SMSCallMe.ACTION_ANSWER"/>
+				<action android:name="orion.old.SMSCallMe.ACTION_ANSWER"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>

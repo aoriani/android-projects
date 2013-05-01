@@ -12,7 +12,7 @@ import orion.old.SMSCallMe.R;
 
 public class SMSDialog extends Activity {
 
-	public static final String ACTION_ANSWER = "com.motorola.SMSCallMe.ACTION_ANSWER";
+	public static final String ACTION_ANSWER = "orion.old.SMSCallMe.ACTION_ANSWER";
 	public static final String EXTRA_PHONENUMBER = "phoneNumber";
 	private static final int   PICK_CONTACT_REQUEST = 1;
 	
