@@ -1,5 +1,8 @@
 package orion.tictactoe;
 
+
+import android.util.Log;
+
 /**
  * The class where resides the AI of the game
  * @author andre
@@ -7,6 +10,7 @@ package orion.tictactoe;
  */
 public class GameEngine {
     
+    private static final String LOG_TAG = "TictacToe/GameEngine";
     //Constants
     static final int MAX_ROWS = 3;
     static final int MAX_COLUMNS = 3;
@@ -22,12 +26,12 @@ public class GameEngine {
             
     
     //Internal State
-    private Piece board[][] = new Piece[MAX_ROWS][MAX_COLUMNS] ;
-    private int move = 1;
-    //Which piece and computer are using
-    private Piece human,computer;
-    private boolean computerFirst;
-    private GameState state;
+    private Piece mBoard[][] = new Piece[MAX_ROWS][MAX_COLUMNS] ;
+    private int mMove = 1;
+    //Which piece and mComputer are using
+    private Piece mHuman,mComputer;
+    private boolean mComputerFirst;
+    private GameState mState;
     
     public GameEngine(){
         reset(true);
@@ -36,17 +40,17 @@ public class GameEngine {
     
     /**
      * Restart the game engine 
-     * @param computerPlayFirst if the computer will play first in this new game
+     * @param computerPlayFirst if the mComputer will play first in this new game
      */
     public void reset(boolean computerPlayFirst){
-        for (Piece[] row: board){
-            for(Piece col:row){
-                col = Piece.EMPTY;
+        for (Piece[] row: mBoard){
+            for(int i = 0; i< MAX_COLUMNS; i++){//Can't use enhanced for to make the assignme
+                row[i] = Piece.EMPTY;
             }
         }
-        move = 1;
-        state = GameState.INIT;
-        computerFirst = computerPlayFirst;
+        mMove = 1;
+        mState = GameState.INIT;
+        mComputerFirst = computerPlayFirst;
     }
     
     public Piece getBoard(int row, int col){
@@ -54,21 +58,21 @@ public class GameEngine {
             throw new IllegalArgumentException(String
                     .format("Position out of the board: (%d,%d)", row, col));
         }
-        return board[row][col];
+        return mBoard[row][col];
     }
     
     public GameState getState(){
-        return state;
+        return mState;
     }
     
     public void setComputerPiece(Piece piece){
         if(piece == Piece.EMPTY) throw new IllegalArgumentException("Cannot set EMPTYh");
-        computer = piece;
+        mComputer = piece;
     }
 
     public void setHumanPiece(Piece piece){
         if(piece == Piece.EMPTY) throw new IllegalArgumentException("Cannot set EMPTYh");
-        human = piece;
+        mHuman = piece;
     }
 
     /**
@@ -79,29 +83,29 @@ public class GameEngine {
     public Piece winner(){
        //Verify rows
        for (int row = 0; row < MAX_ROWS; row++){
-           if ((board[row][0] != Piece.EMPTY) && (board[row][0] == board[row][1])
-                   && (board[row][1] == board[row][2])){
-               return board[row][0];
+           if ((mBoard[row][0] != Piece.EMPTY) && (mBoard[row][0] == mBoard[row][1])
+                   && (mBoard[row][1] == mBoard[row][2])){
+               return mBoard[row][0];
            }         
        }
        
        //Verify cols
        for(int col = 0;  col < MAX_COLUMNS; col++){
-           if((board[0][col] != Piece.EMPTY) && (board[0][col] == board[1][col])
-                   && (board[1][col] == board[2][col])){
-               return board[0][col];
+           if((mBoard[0][col] != Piece.EMPTY) && (mBoard[0][col] == mBoard[1][col])
+                   && (mBoard[1][col] == mBoard[2][col])){
+               return mBoard[0][col];
            }
        }
        
        // Verify diagonals
-       if((board[0][0] != Piece.EMPTY) && (board[0][0] == board[1][1]) && 
-               (board[1][1] == board[2][2])){
-           return board[0][0];
+       if((mBoard[0][0] != Piece.EMPTY) && (mBoard[0][0] == mBoard[1][1]) && 
+               (mBoard[1][1] == mBoard[2][2])){
+           return mBoard[0][0];
        }
        
-       if((board[0][2] != Piece.EMPTY) && (board[0][2] == board[1][1]) && 
-               (board[1][1] == board[2][0])){
-           return board[0][0];
+       if((mBoard[0][2] != Piece.EMPTY) && (mBoard[0][2] == mBoard[1][1]) && 
+               (mBoard[1][1] == mBoard[2][0])){
+           return mBoard[0][2];
        }
        
        return Piece.EMPTY; // No winners 
@@ -110,70 +114,69 @@ public class GameEngine {
     /**
      * Evaluate the likelyhood to win for the player give current board
      * @param player the player for each to evaluate
-     * @return the number of plays the player can do in current move that will 
+     * @return the number of plays the player can do in current mMove that will 
      * still allow the player to win 
      */
-    private int evaluatePlayerChances(Piece player){
+     int evaluatePlayerChances(Piece player){
         int playerChances = 0;
         
         //Verify rows
         for (int row = 0; row < MAX_ROWS; row++){
-            if ( ((board[row][0] == Piece.EMPTY) || (board[row][0] == player)) &&
-                    ((board[row][1] == Piece.EMPTY) || (board[row][1] == player))  &&
-                    ((board[row][2] == Piece.EMPTY) || (board[row][2] == player)) ){
+            if ( ((mBoard[row][0] == Piece.EMPTY) || (mBoard[row][0] == player)) &&
+                    ((mBoard[row][1] == Piece.EMPTY) || (mBoard[row][1] == player))  &&
+                    ((mBoard[row][2] == Piece.EMPTY) || (mBoard[row][2] == player)) ){
                 playerChances++;
             }         
         }
         
         //Verify cols
         for(int col = 0;  col < MAX_COLUMNS; col++){
-            if( ((board[0][col] == Piece.EMPTY) || (board[0][col] == player)) &&
-                    ((board[1][col] == Piece.EMPTY) || (board[1][col] == player))  &&
-                    ((board[2][col] == Piece.EMPTY) || (board[2][col] == player)) ){
+            if( ((mBoard[0][col] == Piece.EMPTY) || (mBoard[0][col] == player)) &&
+                    ((mBoard[1][col] == Piece.EMPTY) || (mBoard[1][col] == player))  &&
+                    ((mBoard[2][col] == Piece.EMPTY) || (mBoard[2][col] == player)) ){
                 playerChances++;
             }
         }
         
         // Verify diagonals
-        if( ((board[0][0] == Piece.EMPTY) || (board[0][0] == player)) &&
-                ((board[1][1] == Piece.EMPTY) || (board[1][1] == player))  &&
-                ((board[2][2] == Piece.EMPTY) || (board[2][2] == player)) ){
+        if( ((mBoard[0][0] == Piece.EMPTY) || (mBoard[0][0] == player)) &&
+                ((mBoard[1][1] == Piece.EMPTY) || (mBoard[1][1] == player))  &&
+                ((mBoard[2][2] == Piece.EMPTY) || (mBoard[2][2] == player)) ){
             playerChances++;
         }
         
-        if( ((board[0][0] == Piece.EMPTY) || (board[0][0] == player)) &&
-                ((board[1][1] == Piece.EMPTY) || (board[1][1] == player))  &&
-                ((board[2][2] == Piece.EMPTY) || (board[2][2] == player)) ){
+        if( ((mBoard[0][0] == Piece.EMPTY) || (mBoard[0][0] == player)) &&
+                ((mBoard[1][1] == Piece.EMPTY) || (mBoard[1][1] == player))  &&
+                ((mBoard[2][2] == Piece.EMPTY) || (mBoard[2][2] == player)) ){
             playerChances++;
         }
         
         return playerChances;
     }
     
-    
     /**
-     * Given current computer simulated play, evaluate how much bad it is
+     * Given current mComputer simulated play, evaluate how much bad it is
      * based on the chances that human player has to succeed on the next play 
-     * @return an weight to indicate how bad it can be the current choice for computer
+     * @return an weight to indicate how bad it can be the current choice for mComputer
      */
-    private int evaluateHowBadPlayCanBe(){
+    int evaluateHowBadPlayCanBe(){
         int weights[] = {1000, 1000, 1000, 1000, 1000, 1000,1000, 1000, 1000};
         
         //Verify human choices
         for(int row = 0; row < MAX_ROWS ; row ++){
             for(int col = 0; col < MAX_COLUMNS; col++){
-                if(board[row][col] == Piece.EMPTY){
+                if(mBoard[row][col] == Piece.EMPTY){
                     //Simulate human play in current square
-                    board[row][col] = human;
+                    mBoard[row][col] = mHuman;
                         //Evaluate players chances
-                        int humanChances = evaluatePlayerChances(human);
-                        int computerChances = evaluatePlayerChances(computer);
-                        //Calculate weights based on the changes of computer to succeed
+                        int humanChances = evaluatePlayerChances(mHuman);
+                        int computerChances = evaluatePlayerChances(mComputer);
+                        //Calculate weights based on the changes of mComputer to succeed
                         weights[3*row + col] = computerChances - humanChances;
                         //But if this play makes human to win update weight to reflect that
-                        if(winner() == human) weights[3*row + col] = -100;
+                        if(winner() == mHuman) weights[3*row + col] = -100;
                     //Undo human simulated play
-                    board[row][col] = Piece.EMPTY;
+                    mBoard[row][col] = Piece.EMPTY;
                 }
                 
             }
@@ -189,53 +192,62 @@ public class GameEngine {
          return lowestWeight;
     }
 
-    
-    private SquarePos findBestPlay() {
+    /**
+     * find the best play for the mComputer
+     * @return The position that mComputer must play
+     */
+    SquarePos findBestPlay() {
         int weights[] = { -1000, -1000, -1000, -1000, -1000, -1000,-1000, -1000, -1000};
         
         //Special cases
-        if( (move == 4) && (board[1][1] == computer)){
-            if ( ((board[0][0] == human) && (board[2][2] == human)) ||
-                 ((board[0][2] == human) && (board[2][0] == human)) ){
+        
+        if( mMove == 1 ){
+            return SquarePos.fromUnidimensional(0);
+        }
+        
+        if ( (mMove == 3) && (mBoard[2][2] == Piece.EMPTY) ) {
+            return SquarePos.fromUnidimensional(8);
+        }
+        
+        if( (mMove == 4) && (mBoard[1][1] == mComputer)){
+            if ( ((mBoard[0][0] == mHuman) && (mBoard[2][2] == mHuman)) ||
+                 ((mBoard[0][2] == mHuman) && (mBoard[2][0] == mHuman)) ){
                 return SquarePos.fromUnidimensional(1);
             }
             
-            if( ( (board[0][0] == human) || (board[0][1] == human) ) 
-                    && (board[1][2] == human) ){
+            if( ( (mBoard[0][0] == mHuman) || (mBoard[0][1] == mHuman) ) 
+                    && (mBoard[1][2] == mHuman) ){
                 return SquarePos.fromUnidimensional(2);
             }
 
-            if( ( (board[0][1] == human) || (board[0][2] == human) ) 
-                    && (board[1][0] == human) ){
+            if( ( (mBoard[0][1] == mHuman) || (mBoard[0][2] == mHuman) ) 
+                    && (mBoard[1][0] == mHuman) ){
                 return SquarePos.fromUnidimensional(0);
             }
 
-            if( ( (board[2][1] == human) || (board[2][2] == human) ) 
-                    && (board[1][0] == human) ){
+            if( ( (mBoard[2][1] == mHuman) || (mBoard[2][2] == mHuman) ) 
+                    && (mBoard[1][0] == mHuman) ){
                 return SquarePos.fromUnidimensional(6);
             }
 
-            if( ( (board[2][0] == human) || (board[2][1] == human) ) 
-                    && (board[1][2] == human) ){
+            if( ( (mBoard[2][0] == mHuman) || (mBoard[2][1] == mHuman) ) 
+                    && (mBoard[1][2] == mHuman) ){
                 return SquarePos.fromUnidimensional(8);
             }
         }
         
-        if( move == 1 ) return SquarePos.fromUnidimensional(0);
-        
-        if ( (move == 3) && (board[2][2] == Piece.EMPTY) ) return SquarePos.fromUnidimensional(8);
         
         //Heuristic - MinMax
         for(int row = 0; row < MAX_ROWS; row++){
             for(int col = 0; col < MAX_COLUMNS; col++){
-                if(board[row][col] == Piece.EMPTY){
-                    //Simulate computer play
-                    board[row][col] = computer;
+                if(mBoard[row][col] == Piece.EMPTY){
+                    //Simulate mComputer play
+                    mBoard[row][col] = mComputer;
                         weights[3*row + col] = evaluateHowBadPlayCanBe();
                         //Highlight position that generate win
-                        if(winner() == computer) weights[3*row + col] = 10000;
-                    //Undo computer simulated play
-                    board[row][col] = Piece.EMPTY;
+                        if(winner() == mComputer) weights[3*row + col] = 10000;
+                    //Undo mComputer simulated play
+                    mBoard[row][col] = Piece.EMPTY;
                 }
             }
         }
@@ -251,24 +263,103 @@ public class GameEngine {
         return SquarePos.fromUnidimensional(maxPos);
     }
     
-    
+    /**
+     * Move the engine to a playable mState after validating players
+     */
     public void start(){
-        if(state != GameState.INIT){
-            throw new IllegalStateException("To start you must be on INIT state to start");
+        if(mState != GameState.INIT){
+            throw new IllegalStateException("To start you must be on INIT mState to start");
         }
         //Validate
-        if( computer != human ){
-            throw new IllegalStateException("Computer and human shall use different pieces");
+        if( (mComputer == mHuman) || (mComputer == null) || (mHuman == null) ){
+            throw new IllegalStateException("Computer and human shall use different"
+                                        +" pieces and they must be not null");
         }
-        state = computerFirst? GameState.COMPUTER_TURN:GameState.HUMAN_TURN; 
+        mState = mComputerFirst? GameState.COMPUTER_TURN:GameState.HUMAN_TURN; 
     }
     
-    public void doHumanPlay(SquarePos pos){
-        //TODO: Implement
+    /**
+     * Ensure the player can do the wanted mMove
+     * @param pos The position the playes wants to use
+     * @throws IllegalArgumentException if the position is already taken
+     */
+    private void validatePlay(SquarePos pos) throws IllegalArgumentException{
+        if( mBoard[pos.mRow][pos.mCol]!= Piece.EMPTY){
+            throw new IllegalArgumentException("Cannot play in occupied place");
+        }
     }
 
+    /**
+     * Calculate the next mState after a play
+     */
+    void nextState(){
+        switch(mState){
+            case COMPUTER_TURN:
+            case HUMAN_TURN:
+                Piece currWinner = winner();
+                switch(currWinner){
+                    case CROSS:
+                    case NOUGHT: //We have a winner
+                        mState = (mComputer == currWinner)?GameState.COMPUTER_WINS:GameState.HUMAN_WINS;
+                        return;
+                    case EMPTY://We have a next mMove or a tie if the board has already been full filled
+                        if (mMove == 10){
+                            mState = GameState.TIE;
+                        }else{
+                            mState = (mState == GameState.COMPUTER_TURN)?GameState.HUMAN_TURN:GameState.COMPUTER_TURN;
+                        }
+                        return;
+                }
+                break;
+            default:
+                Log.d(LOG_TAG,"There is no next mState for "+ mState.toString());
+        }
+        
+    }
+    
+    /**
+     * Does the play for a human player
+     * @param pos The position the human player wants to play
+     * @throws IllegalStateException if it is not the human's turn
+     */
+    public void doHumanPlay(SquarePos pos){
+        if(mState != GameState.HUMAN_TURN) {
+            throw new IllegalStateException("Computer turn");
+        }
+        validatePlay(pos);
+        mBoard[pos.mRow][pos.mCol] = mHuman;
+        mMove++;
+        nextState();
+    }
+    
+    /**
+     * Does the mComputer play.
+     * @throws IllegalStateException if it is not the mComputer's turn
+     */
     public void doComputerPlay(){
-        //TODO: Implement
+        if(mState != GameState.COMPUTER_TURN) {
+            throw new IllegalStateException("Human turn");
+        }
+        SquarePos pos = findBestPlay();
+        validatePlay(pos);
+        mBoard[pos.mRow][pos.mCol] = mComputer;
+        mMove++;
+        nextState();
+    }
+    
+    
+    //Backdoor for testing
+    void setBoard(Piece board[][]){
+        assert (board.length == MAX_ROWS) && (board[0].length == MAX_COLUMNS);
+        mBoard = board;
+    }
+    
+    int getMove(){
+        return mMove;
+    }
+    
+    void setMove(int move){
+        mMove = move;
     }
 
 }

@@ -11,6 +11,31 @@ public class SquarePos {
         mRow = row; mCol = col;
     }
     
+    @Override
+    public String toString() {
+        return "SquarePos [" + mRow + ", " + mCol + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + mCol;
+        result = prime * result + mRow;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        SquarePos other = (SquarePos) obj;
+        if (mCol != other.mCol) return false;
+        if (mRow != other.mRow) return false;
+        return true;
+    }
+
     public int getRow(){return mRow;}
     
     public int getColumn(){return mCol;}
