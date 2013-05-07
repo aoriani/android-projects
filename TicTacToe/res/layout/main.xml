@@ -1,16 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:orion="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res/orion.tictactoe"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<orion.tictactoe.SquareView
+    android:layout_height="fill_parent">
+
+<android.support.v7.widget.GridLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    orion:row="1"
-    orion:column="1"
-    orion:state="nought" 
-    />
+    app:columnCount="3"
+    app:rowCount="3" >
+
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:column="0"
+        app:row="0" />
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:column="1"
+        app:row="0" />
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:column="2"
+        app:row="0" />
+
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:column="0"
+        app:row="1"/>
+
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        app:column="1"
+        app:row="1" />
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:column="2"
+        app:row="1" />
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:column="0"
+        app:row="2" />
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:column="1"
+        app:row="2" />
+    <orion.tictactoe.SquareView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:column="2"
+        app:row="2" />
+</android.support.v7.widget.GridLayout>
+
 </LinearLayout>
 
