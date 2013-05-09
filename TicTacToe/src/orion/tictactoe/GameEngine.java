@@ -33,13 +33,20 @@ public class GameEngine {
     private boolean mComputerFirst;
     private GameState mState;
     
-    public GameEngine(){
+    //Singleton instance
+    private static GameEngine sInstance = new GameEngine();
+    
+    GameEngine(){
         reset(true);
+    }
+    
+    public static GameEngine getInstance(){
+        return sInstance;
     }
     
     
     /**
-     * Restart the game engine 
+     * Restart the game mEngine 
      * @param computerPlayFirst if the mComputer will play first in this new game
      */
     public void reset(boolean computerPlayFirst){
@@ -69,10 +76,18 @@ public class GameEngine {
         if(piece == Piece.EMPTY) throw new IllegalArgumentException("Cannot set EMPTYh");
         mComputer = piece;
     }
+    
+    public Piece getComputerPiece(){
+        return mComputer;
+    }
 
     public void setHumanPiece(Piece piece){
         if(piece == Piece.EMPTY) throw new IllegalArgumentException("Cannot set EMPTYh");
         mHuman = piece;
+    }
+    
+    public Piece getHumanPiece(){
+        return mHuman;
     }
 
     /**
@@ -264,7 +279,7 @@ public class GameEngine {
     }
     
     /**
-     * Move the engine to a playable mState after validating players
+     * Move the mEngine to a playable mState after validating players
      */
     public void start(){
         if(mState != GameState.INIT){
@@ -284,7 +299,7 @@ public class GameEngine {
      * @throws IllegalArgumentException if the position is already taken
      */
     private void validatePlay(SquarePos pos) throws IllegalArgumentException{
-        if( mBoard[pos.mRow][pos.mCol]!= Piece.EMPTY){
+        if( mBoard[pos.getRow()][pos.getColumn()]!= Piece.EMPTY){
             throw new IllegalArgumentException("Cannot play in occupied place");
         }
     }
@@ -324,10 +339,10 @@ public class GameEngine {
      */
     public void doHumanPlay(SquarePos pos){
         if(mState != GameState.HUMAN_TURN) {
-            throw new IllegalStateException("Computer turn");
+            throw new IllegalStateException("Not computer's turn - current state is " + mState);
         }
         validatePlay(pos);
-        mBoard[pos.mRow][pos.mCol] = mHuman;
+        mBoard[pos.getRow()][pos.getColumn()] = mHuman;
         mMove++;
         nextState();
     }
@@ -335,16 +350,18 @@ public class GameEngine {
     /**
      * Does the mComputer play.
      * @throws IllegalStateException if it is not the mComputer's turn
+     * @return the chosen position by computer to play
      */
-    public void doComputerPlay(){
+    public SquarePos doComputerPlay(){
         if(mState != GameState.COMPUTER_TURN) {
-            throw new IllegalStateException("Human turn");
+            throw new IllegalStateException("Not computer's turn - current state is " + mState);
         }
         SquarePos pos = findBestPlay();
         validatePlay(pos);
-        mBoard[pos.mRow][pos.mCol] = mComputer;
+        mBoard[pos.getRow()][pos.getColumn()] = mComputer;
         mMove++;
         nextState();
+        return pos;
     }
     
     

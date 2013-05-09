@@ -74,10 +74,10 @@ public class SquareView extends ImageView {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SquareView);
         try {
             int x = a.getInt(R.styleable.SquareView_row, 0);
-            if(x >= 0 && x < GameEngine.MAX_ROWS) mColumn = x;
+            if(x >= 0 && x < GameEngine.MAX_ROWS) mRow = x;
             
             int y = a.getInt(R.styleable.SquareView_column, 0);
-            if(y >= 0 &&  y < GameEngine.MAX_COLUMNS) mRow = y;
+            if(y >= 0 &&  y < GameEngine.MAX_COLUMNS) mColumn = y;
             
             int state = a.getInt(R.styleable.SquareView_state, 0);
             setState(Piece.values()[state]);

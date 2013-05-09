@@ -5,7 +5,7 @@ package orion.tictactoe;
  *  to represent a point
  */
 public class SquarePos {
-    int mRow,mCol;
+    private int mRow,mCol;
     
     SquarePos(int row, int col){
         mRow = row; mCol = col;
