@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/newGameAction " android:title="@string/newGameAction" android:showAsAction="ifRoom" android:icon="@drawable/ic_action_new_game"></item>
+    <item android:id="@+id/shareAppAction" android:title="@string/share_action" android:icon="@drawable/ic_action_share_app" android:showAsAction="ifRoom"></item>
+    <item android:id="@+id/settingsAction" android:title="@string/settings_action" android:icon="@drawable/ic_action_settings" android:showAsAction="ifRoom"></item>
+    <item android:id="@+id/aboutAction" android:icon="@drawable/ic_action_about_action" android:title="@string/about_action" android:showAsAction="ifRoom"></item>
+    
+
+</menu>

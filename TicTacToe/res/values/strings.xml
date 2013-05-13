@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Main</string>
+    <string name="newGameAction">New Game</string>
+    <string name="share_action">Share</string>
+    <string name="settings_action">Settings</string>
+    <string name="about_action">About</string>
 </resources>

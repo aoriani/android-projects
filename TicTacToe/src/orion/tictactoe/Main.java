@@ -1,14 +1,16 @@
 package orion.tictactoe;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import android.util.Log;
 
-public class Main extends Activity implements OnClickListener
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+
+public class Main extends SherlockActivity implements OnClickListener
 {
     private static final String LOG_TAG = "TicTacToe/MainActivity";
     
@@ -34,6 +36,13 @@ public class Main extends Activity implements OnClickListener
         mEngine.setComputerPiece(Piece.NOUGHT);
         mEngine.start();
         
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.main_action_bar, menu);
+        return true;
     }
 
     @Override
