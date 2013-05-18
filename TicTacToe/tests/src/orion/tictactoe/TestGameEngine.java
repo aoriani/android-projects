@@ -1,5 +1,6 @@
 package orion.tictactoe;
 
+import android.os.Bundle;
 import orion.tictactoe.GameEngine.GameState;
 import junit.framework.TestCase;
 
@@ -240,5 +241,39 @@ public class TestGameEngine extends TestCase {
         engine.setBoard(board);
         assertEquals("Computer has to choose to block human victory (2,1)", 
                 new SquarePos(2,1),engine.findBestPlay());
+    }
+    
+    /**
+     * Test if the saving and restoring of the board is working properly
+     */
+    public void testSaveRestore(){
+        engine.setComputerPiece(Piece.NOUGHT);
+        engine.setHumanPiece(Piece.CROSS);
+        engine.setMove(4);
+        engine.start();
+        
+        Piece board[][] ={
+                {Piece.NOUGHT,Piece.EMPTY,Piece.EMPTY},
+                {Piece.CROSS, Piece.EMPTY, Piece.NOUGHT,},
+                {Piece.CROSS, Piece.EMPTY,Piece.CROSS,}
+        };
+        
+        engine.setBoard(board);
+        Bundle bundle = new Bundle();
+        engine.saveState(bundle);
+        
+        GameEngine restoredEngine = new GameEngine();
+        restoredEngine.restoreState(bundle);
+        assertEquals(engine.getMove(),restoredEngine.getMove());
+        assertEquals(engine.getState(), restoredEngine.getState());
+        assertEquals(engine.getComputerPiece(),restoredEngine.getComputerPiece());
+        assertEquals(engine.getHumanPiece(), restoredEngine.getHumanPiece());
+        for(int row = 0; row < GameEngine.MAX_ROWS; row++){
+            for(int col = 0; col < GameEngine.MAX_COLUMNS; col++){
+                assertEquals(String.format("Asserting for [%d,%d]",row,col), 
+                        engine.getBoard(row, col), restoredEngine.getBoard(row, col));
+            }
+        }
+        
     }
 }

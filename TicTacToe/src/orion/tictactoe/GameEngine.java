@@ -1,6 +1,9 @@
 package orion.tictactoe;
 
 
+import java.util.ArrayList;
+
+import android.os.Bundle;
 import android.util.Log;
 
 /**
@@ -14,6 +17,13 @@ public class GameEngine {
     //Constants
     static final int MAX_ROWS = 3;
     static final int MAX_COLUMNS = 3;
+    
+    //State Keys
+    private static final String STATE_BOARD = "GameEngine_STATE_BOARD";
+    private static final String STATE_MOVE = "GameEngine_STATE_MOVE";
+    private static final String STATE_HUMAN = "GameEngine_STATE_HUMAN";
+    private static final String STATE_COMPUTER = "GameEngine_STATE_COMPUTER";
+    private static final String STATE_STATE = "GameEngine_STATE_STATE";
     
     public static enum GameState{
         INIT,
@@ -82,7 +92,7 @@ public class GameEngine {
     }
 
     public void setHumanPiece(Piece piece){
-        if(piece == Piece.EMPTY) throw new IllegalArgumentException("Cannot set EMPTYh");
+        if(piece == Piece.EMPTY) throw new IllegalArgumentException("Cannot set EMPTY");
         mHuman = piece;
     }
     
@@ -90,6 +100,40 @@ public class GameEngine {
         return mHuman;
     }
 
+    
+    /**
+     * Save the state to a bundle of an activity
+     * @param bundle the bundle where the state shall be saved
+     */
+    public void saveState(Bundle bundle){
+        bundle.putInt(STATE_MOVE, mMove);
+        bundle.putString(STATE_COMPUTER, mComputer.name());
+        bundle.putString(STATE_HUMAN, mHuman.name());
+        bundle.putString(STATE_STATE, mState.name());
+        ArrayList<String> flatBoard = new ArrayList<String>();
+        for(int i = 0; i < MAX_ROWS; i++){
+            for(int j = 0; j < MAX_COLUMNS; j++){
+                flatBoard.add(mBoard[i][j].name());
+            }
+        }
+        bundle.putStringArrayList(STATE_BOARD, flatBoard);
+    }
+    
+    public void restoreState(Bundle bundle){
+        mMove = bundle.getInt(STATE_MOVE);
+        mComputer = Piece.valueOf(bundle.getString(STATE_COMPUTER));
+        mHuman = Piece.valueOf(bundle.getString(STATE_HUMAN));
+        mState = GameState.valueOf(bundle.getString(STATE_STATE));
+        ArrayList<String> flatBoard = bundle.getStringArrayList(STATE_BOARD);
+        int k = 0;
+        for(int i = 0; i < MAX_ROWS; i++){
+            for(int j = 0; j < MAX_COLUMNS; j++){
+                mBoard[i][j] = Piece.valueOf(flatBoard.get(k++));
+            }
+        }
+    }
+    
+    
     /**
      * Verify if we have winners
      * @return {@value Piece#NOUGHT} or {@value Piece#CROSS} if someone won or
