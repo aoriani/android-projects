@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <!-- Default Values -->
+   <bool name="computer_play_first_default_setting">true</bool> 
+   <string name="player_piece_default_setting">cross</string>
+</resources>

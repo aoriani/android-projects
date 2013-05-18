@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!-- Action Bar Items -->
     <string name="app_name">Main</string>
     <string name="newGameAction">New Game</string>
     <string name="share_action">Share</string>
     <string name="settings_action">Settings</string>
     <string name="about_action">About</string>
+    
+    <!-- Preference Panel -->
+    <string name="general_game_settings_title">General Game Options</string>
+    <string name="computer_plays_first_settings_title">Computer plays first ?</string>
+    <string name="computer_plays_first_settings_summary"> Whether the computer will be the first to play in the game </string>
+    <string name="player_piece_settings_title">Player\'s Piece</string>
+    <string name="player_piece_settings_summary">Select which side you want to play.\nCurrently %1$s.</string>
+    <string name="player_piece_settings_dialog_title">Select your side</string>
 </resources>

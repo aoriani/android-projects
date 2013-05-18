@@ -1,6 +1,8 @@
 package orion.tictactoe;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -9,11 +11,11 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class Main extends SherlockActivity implements OnClickListener
 {
-    private static final String LOG_TAG = "TicTacToe/MainActivity";
-    
+  
     GameEngine mEngine = GameEngine.getInstance();
     SquareView mBoard[][] = new SquareView[GameEngine.MAX_ROWS][GameEngine.MAX_COLUMNS];
     
@@ -22,6 +24,10 @@ public class Main extends SherlockActivity implements OnClickListener
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
+        //Set the default values
+        //PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        
         setContentView(R.layout.main);
         ViewGroup grid = (ViewGroup) findViewById(R.id.grid);
         final int gridChildCount = grid.getChildCount();
@@ -74,6 +80,21 @@ public class Main extends SherlockActivity implements OnClickListener
                     break;
             }
         }
-        
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        // Respond to the action bar's Up/Home button
+        case R.id.newGameAction:
+        case R.id.shareAppAction:
+        case R.id.settingsAction:
+            Intent settingsIntent = new Intent(this, Preferences.class);
+            startActivity(settingsIntent);
+            return true;
+        case R.id.aboutAction:
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
