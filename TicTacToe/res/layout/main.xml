@@ -2,66 +2,112 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:orion="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res/orion.tictactoe"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-<android.support.v7.widget.GridLayout
-    android:id="@+id/grid"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:columnCount="3"
-    app:rowCount="3"
-    android:background="@android:color/white" >
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="0"
-        app:row="0" />
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="1"
-        app:row="0"/>
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="2"
-        app:row="0" />
+	    <android.support.v7.widget.GridLayout
+	        android:id="@+id/grid"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/white"
+	        app:columnCount="3"
+	        app:rowCount="3" >
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="0"
+	            app:row="0" />
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="1"
+	            app:row="0" />
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="2"
+	            app:row="0" />
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="0"
+	            app:row="1" />
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="1"
+	            app:row="1" />
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="2"
+	            app:row="1" />
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="0"
+	            app:row="2" />
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="1"
+	            app:row="2" />
+	
+	        <orion.tictactoe.SquareView
+	            android:layout_width="92dp"
+	            android:layout_height="92dp"
+	            app:column="2"
+	            app:row="2" />
+	    </android.support.v7.widget.GridLayout>
+	    <include layout="@layout/player_won"/>
+	    <include layout="@layout/computer_won"/>
+	    <include layout="@layout/tie"/>
+    </FrameLayout>
 
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="0"
-        app:row="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="1"
-        app:row="1" />
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="2"
-        app:row="1" />
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="0"
-        app:row="2" />
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="1"
-        app:row="2" />
-    <orion.tictactoe.SquareView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:column="2"
-        app:row="2" />
-</android.support.v7.widget.GridLayout>
+        <TextView
+            android:id="@+id/playerScoreLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Player's Score" />
+
+        <TextView
+            android:id="@+id/playerScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+        
+    <TextView
+        android:id="@+id/computerScoreLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Computer's Score" />
+
+    <TextView
+        android:id="@+id/computerScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    </LinearLayout>
+
+ 
 
 </LinearLayout>
-

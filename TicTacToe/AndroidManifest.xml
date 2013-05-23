@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="Main"
+            android:name="MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,15 +23,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="Preferences"
+            android:name="PreferencesActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
-            android:parentActivityName="orion.tictactoe.Main" >
+            android:parentActivityName="orion.tictactoe.MainActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="orion.tictactoe.Main" /> 
+	            android:value="orion.tictactoe.MainActivity" /> 
 	    </activity>
     </application>
 

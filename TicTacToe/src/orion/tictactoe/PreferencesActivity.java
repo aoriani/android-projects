@@ -13,9 +13,11 @@ import android.support.v4.app.NavUtils;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class Preferences extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
+public class PreferencesActivity extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
 
     public static final String PLAYER_PIECE_KEY = "players_piece";
+    public static final String COMPUTER_PLAY_FIRST_KEY = "computer_play_first";
+    
     private ListPreference mplayerPiecePreference;
     
     @SuppressWarnings("deprecation")

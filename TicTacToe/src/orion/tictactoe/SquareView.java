@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 /** The view to show the squares in the tic tac toe game */
@@ -108,6 +109,7 @@ public class SquareView extends ImageView {
      */
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
+        Log.d(VIEW_LOG_TAG, "Restoring state");
         if(state instanceof SquareSavedState){
             SquareSavedState savedState = (SquareSavedState) state;
             super.onRestoreInstanceState(savedState.getSuperState());
@@ -122,6 +124,7 @@ public class SquareView extends ImageView {
      */
     @Override
     protected Parcelable onSaveInstanceState() {
+        Log.d(VIEW_LOG_TAG, "Saving State");
         Parcelable superParcelable = super.onSaveInstanceState();
         return new SquareSavedState(superParcelable, mState);
     }  

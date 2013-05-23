@@ -1,6 +1,7 @@
 package orion.tictactoe;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -13,9 +14,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class Main extends SherlockActivity implements OnClickListener
+public class MainActivity extends SherlockActivity implements OnClickListener
 {
-  
     GameEngine mEngine = GameEngine.getInstance();
     SquareView mBoard[][] = new SquareView[GameEngine.MAX_ROWS][GameEngine.MAX_COLUMNS];
     
@@ -26,7 +26,7 @@ public class Main extends SherlockActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         
         //Set the default values
-        //PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         
         setContentView(R.layout.main);
         ViewGroup grid = (ViewGroup) findViewById(R.id.grid);
@@ -37,10 +37,11 @@ public class Main extends SherlockActivity implements OnClickListener
             SquareView square = (SquareView) view;
             mBoard[square.getRow()][square.getColumn()] = square;
         }
-        mEngine.reset(false);
-        mEngine.setHumanPiece(Piece.CROSS);
-        mEngine.setComputerPiece(Piece.NOUGHT);
-        mEngine.start();
+        
+        if( savedInstanceState == null){ //We starting a brand new activity
+            //setup a new game
+            newGame();
+        }
         
     }
 
@@ -87,14 +88,76 @@ public class Main extends SherlockActivity implements OnClickListener
         switch (item.getItemId()) {
         // Respond to the action bar's Up/Home button
         case R.id.newGameAction:
+                newGame();
+            return true;
         case R.id.shareAppAction:
+            shareApp();
+            return true;
         case R.id.settingsAction:
-            Intent settingsIntent = new Intent(this, Preferences.class);
+            Intent settingsIntent = new Intent(this, PreferencesActivity.class);
             startActivity(settingsIntent);
             return true;
         case R.id.aboutAction:
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        GameEngine.getInstance().saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        GameEngine.getInstance().restoreState(savedInstanceState);
+        for(int row = 0; row < GameEngine.MAX_ROWS; row++){
+            for(int col = 0; col < GameEngine.MAX_COLUMNS; col++){
+                Piece currentPiece = GameEngine.getInstance().getBoard(row, col);
+                mBoard[row][col].setState(GameEngine.getInstance().getBoard(row, col));
+                mBoard[row][col].setClickable(currentPiece == Piece.EMPTY);
+                
+            }
+        }
+    }
+    
+    private void newGame(){
+        //Retrieve user preferences
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean computerPlayFirst = sharedPrefs.getBoolean(PreferencesActivity
+                .COMPUTER_PLAY_FIRST_KEY, getResources()
+                .getBoolean(R.bool.computer_play_first_default_setting));
+        String humanPieceString = sharedPrefs.getString(PreferencesActivity
+                .PLAYER_PIECE_KEY,getString(R.string.player_piece_default_setting));
+        Piece humanPiece = humanPieceString.equals("cross")?Piece.CROSS:Piece.NOUGHT;
+        Piece computerPiece = (humanPiece == Piece.CROSS)?Piece.NOUGHT:Piece.CROSS;
+        
+        //Restart Engine
+        GameEngine engine = GameEngine.getInstance();
+        engine.reset(computerPlayFirst);
+        engine.setComputerPiece(computerPiece);
+        engine.setHumanPiece(humanPiece);
+        engine.start();
+        
+        //Restart UI
+        for(int row = 0; row < GameEngine.MAX_ROWS; row++){
+            for(int col = 0; col < GameEngine.MAX_COLUMNS; col++){
+                mBoard[row][col].setState(Piece.EMPTY);
+                mBoard[row][col].setClickable(true);
+            }
+        }
+        if (computerPlayFirst){
+            SquarePos pos = engine.doComputerPlay();
+            mBoard[pos.getRow()][pos.getColumn()].setState(engine.getComputerPiece());
+        }
+    }
+    
+    public void shareApp(){
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_text));
+        shareIntent.setType("text/plain");
+        startActivity(shareIntent);
     }
 }
