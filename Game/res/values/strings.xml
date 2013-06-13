@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">Tennis Bounce Wallpaper</string>
+    <string name="wallpaper_description">A Tennis court and a funny bouncing ball</string>
+    <string name="eula">Use this software at your own risk. By using this software, you agree that none of its developers are liable for any negative consequence caused by its use.</string>
+    <string name="andengine">This program uses AndEgine and its extensions.\nPlease support that project.\n http://www.andengine.org/</string>
+</resources>

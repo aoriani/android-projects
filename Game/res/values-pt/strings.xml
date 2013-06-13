@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tennis Bounce Wallpaper</string>
+    <string name="wallpaper_description">Uma quadra de tênis para bater uma bolinha</string>
+    <string name="eula">Use esse programa por sua conta e risco. Ao usá-lo, você concorda que nenhum de seus desenvolvedores é responsável por qualquer consequência negativa decorrente de seu uso.</string>
+    <string name="andengine">Este programa usa AndEgine e suas extensões.\nPor favor apoie esse projeto.\n http://www.andengine.org/</string>
+</resources>

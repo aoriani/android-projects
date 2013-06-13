@@ -1,0 +1,55 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="orion.tennisbounce"
+    android:versionCode="3"
+    android:versionName="0.1-alpha" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="15" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <compatible-screens>
+        <!-- Small -->
+        <screen android:screenSize="small" android:screenDensity="mdpi"/>
+        <screen android:screenSize="small" android:screenDensity="hdpi"/>
+        <screen android:screenSize="small" android:screenDensity="xhdpi"/>
+        <!-- Normal Screens -->
+        <screen android:screenSize="normal" android:screenDensity="mdpi"/>
+        <screen android:screenSize="normal" android:screenDensity="hdpi"/>
+        <screen android:screenSize="normal" android:screenDensity="xhdpi"/>
+    </compatible-screens>
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <service
+            android:name="orion.tennisbounce.GameLiveWallpaper"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_WALLPAPER" >
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" >
+                </action>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper" >
+            </meta-data>
+        </service>
+        
+        <activity android:name="com.google.ads.AdActivity"
+              android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <activity android:name=".SettingsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
