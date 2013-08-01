@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">ArduinoNotification</string>
+
+    <string name="notif_settings">Notification Settings</string>
+
+</resources>
